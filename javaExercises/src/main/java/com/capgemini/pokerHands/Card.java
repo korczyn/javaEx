@@ -3,18 +3,18 @@ package com.capgemini.pokerHands;
 public class Card {
 	private char suit;
 	private int rank;
-	
-	Card(char suit, int rank){
+
+	Card(char suit, int rank) {
 		this.suit = suit;
 		this.rank = rank;
 	}
-	
-	public char getSuit(){
+
+	public char getSuit() {
 		return this.suit;
 	}
 
-	public int getRank(){
+	public int getRank() {
 		return this.rank;
 	}
-	
+
 }
