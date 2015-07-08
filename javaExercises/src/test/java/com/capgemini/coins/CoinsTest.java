@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.capgemini.coins.Coins;
+
 public class CoinsTest {
 
 	public static List<Integer> input(int[] nums){

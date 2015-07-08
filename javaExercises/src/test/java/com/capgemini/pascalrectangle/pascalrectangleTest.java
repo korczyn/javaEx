@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.capgemini.pascalrectangle.PascalRectangle;
+
 public class pascalrectangleTest {
 
 	@Test

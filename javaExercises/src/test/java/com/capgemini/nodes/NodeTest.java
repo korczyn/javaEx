@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.capgemini.nodes.Node;
+import com.capgemini.nodes.NodeValidators;
+
 public class NodeTest {
 
 	@Test
