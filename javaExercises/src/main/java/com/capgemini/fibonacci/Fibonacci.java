@@ -43,6 +43,7 @@ public class Fibonacci {
 		arr[2] = 0;
 		return arr;
 	}
+	
 
 	public static void main(String[] args) {
 		for (int i = 0; i < 100; i++) {

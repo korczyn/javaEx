@@ -9,32 +9,32 @@ import com.capgemini.pascalrectangle.PascalRectangle;
 public class pascalrectangleTest {
 
 	@Test
-	public void testTopOfTriangle(){
+	public void shouldReturn0For0_0(){
 		assertEquals(1, PascalRectangle.pascal(0, 0));
 	}
 	
 	@Test
-	public void testCorrectNumbers1(){
+	public void shouldReturn1For2_2(){
 		assertEquals(1, PascalRectangle.pascal(2, 2));
 	}
 	
 	@Test
-	public void testCorrectNumbers2(){
+	public void shouldReturn10For5_2(){
 		assertEquals(10, PascalRectangle.pascal(5, 2));
 	}
 	
 	@Test
-	public void testNegativeRows(){
+	public void shouldReturnNeg1For0_Neg1(){
 		assertEquals(-1, PascalRectangle.pascal(0, -1));
 	}
 	
 	@Test
-	public void testNegativeColumns(){
+	public void shouldReturnNeg1ForNeg1_0(){
 		assertEquals(-1, PascalRectangle.pascal(-1, 0));
 	}
 
 	@Test
-	public void testTooMuchColumnsToRows(){
+	public void shouldReturnNeg1For2_3(){
 		assertEquals(-1, PascalRectangle.pascal(2, 3));
 	}
 }
