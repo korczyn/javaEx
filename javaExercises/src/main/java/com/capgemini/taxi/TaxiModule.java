@@ -8,9 +8,6 @@ import java.util.Scanner;
 
 public class TaxiModule {
 
-	public static int taxisQuan;
-	public static int maxTaxisReturned;
-
 	public static double calculateDistance(int taxiX, int taxiY, int custX, int custY) {
 		double xSqr = Math.pow(taxiX - custX, 2);
 		double ySqr = Math.pow(taxiY - custY, 2);
@@ -47,8 +44,8 @@ public class TaxiModule {
 	}
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		taxisQuan = 1000;
-		maxTaxisReturned = Math.round(taxisQuan / 20);
+		int taxisQuan = 1000;
+		int maxTaxisReturned = Math.round(taxisQuan / 20);
 
 		Taxi[] taxis = new Taxi[taxisQuan];
 		for (int i = 0; i < taxis.length; i++) {
