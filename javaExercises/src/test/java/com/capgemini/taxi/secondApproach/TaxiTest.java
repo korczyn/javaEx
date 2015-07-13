@@ -69,6 +69,27 @@ public class TaxiTest {
 	}
 	
 	@Test
+	public void shouldReturnTrueIfEveryReturnedTaxiIsAvailable() throws InterruptedException{
+		Random r = new Random();
+		int custX = r.nextInt(1000);
+		int custY = r.nextInt(1000);
+		Taxi[] taxis = new Taxi[10000];
+		for (int i = 0; i < taxis.length; i++) {
+			taxis[i] = new Taxi(i, custX, custY);
+			taxis[i].start();
+		}
+		System.out.println("All taxis dispatched");
+		TimeUnit.SECONDS.sleep(2);
+		TaxiModule.sortTaxisByDistance(taxis);
+		List<Taxi> closeTaxis = TaxiModule.returnMaxAvailableTaxisInGivenProximity(taxis, 100, 500);
+		
+		for (int i = 0; i < closeTaxis.size(); i++) {
+			System.out.println(closeTaxis.get(i).isAvailable());
+		}
+		//assertTrue(closeTaxis.get(i).isAvailable());
+		
+	}
+	@Test
 	public void shouldReturnTrueIfCustomerPositionDidNotChange() throws InterruptedException{
 		Taxi t = new Taxi(1, 144, 167);
 		t.start();

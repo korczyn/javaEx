@@ -1,4 +1,4 @@
-package com.capgemini.taxi.secondApproach;
+package taxi.secondApproach.interactive;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;

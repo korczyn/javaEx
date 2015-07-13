@@ -39,9 +39,7 @@ public class NodeTest {
 		nodes.add(new Node("1111", "qq", "3333"));
 		nodes.add(new Node("2222", "qq", "1111"));
 		nodes.add(new Node("3333", "qq", "2222"));
-		assertEquals(true, NodeValidators.haveCycles(0, nodes));	
-		assertEquals(true, NodeValidators.haveCycles(1, nodes));
-		assertEquals(true, NodeValidators.haveCycles(2, nodes));	
+		assertEquals(true, NodeValidators.haveCycles(nodes));		
 	}
 	
 	@Test
@@ -50,9 +48,7 @@ public class NodeTest {
 		nodes.add(new Node("1111", "qq", "null"));
 		nodes.add(new Node("2222", "qq", "1111"));
 		nodes.add(new Node("3333", "qq", "2222"));
-		assertEquals(false, NodeValidators.haveCycles(0, nodes));	
-		assertEquals(false, NodeValidators.haveCycles(1, nodes));
-		assertEquals(false, NodeValidators.haveCycles(2, nodes));
+		assertEquals(false, NodeValidators.haveCycles(nodes));
 	}
 	
 	@Test

@@ -22,6 +22,49 @@ public class PokerTest {
 		straightFlush = new Hand("6H 7H 8H 5H 4H");
 		royalFlush = new Hand("KH JH TH QH AH");
 	}
+	
+	@Test
+	public void shouldReturn1IfHighCard(){
+		assertEquals(1, highCard.value[0]);
+	}
+	@Test
+	public void shouldReturn2IfOnePair(){
+		assertEquals(2, onePair.value[0]);
+	}
+	@Test
+	public void shouldReturn3IfTwoPairs(){
+		assertEquals(3, twoPairs.value[0]);
+	}
+	@Test
+	public void shouldReturn4IfThreeOaK(){
+		assertEquals(4, threeOaK.value[0]);
+	}
+	@Test
+	public void shouldReturn5IfStraight(){
+		assertEquals(5, straight.value[0]);
+	}
+	@Test
+	public void shouldReturn6IfFlush(){
+		assertEquals(6, flush.value[0]);
+	}
+	@Test
+	public void shouldReturn7IfFull(){
+		assertEquals(7, full.value[0]);
+	}
+	@Test
+	public void shouldReturn8IfFourOaK(){
+		assertEquals(8, fourOaK.value[0]);
+	}
+	@Test
+	public void shouldReturn9IfStraightFlush(){
+		assertEquals(9, straightFlush.value[0]);
+	}
+	@Test
+	public void shouldReturn10IfRoyalFlush(){
+		assertEquals(10, royalFlush.value[0]);
+	}
+	
+	
 
 	@Test
 	public void shouldReturnNeg1WithComparePairOf7ToPairOfJacks() {

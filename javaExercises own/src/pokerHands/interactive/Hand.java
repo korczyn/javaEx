@@ -1,8 +1,9 @@
-package com.capgemini.pokerHands;
+package pokerHands.interactive;
 
 public class Hand {
 
-	private Card[] cards;
+	String res = "";
+	public Card[] cards;
 	int[] value;
 
 	private static Card makeCard(String c) {
@@ -34,12 +35,8 @@ public class Hand {
 		}
 	}
 
-	Hand(String hand) {
-		cards = new Card[5];
-		String[] tmp = hand.split(" ");
-		for (int i = 0; i < tmp.length; i++) {
-			cards[i] = makeCard(tmp[i]);
-		}
+	Hand(Card[] cards) {
+		
 
 		int[] ranks = new int[14];
 		for (int i = 0; i < cards.length; i++) {
@@ -99,7 +96,6 @@ public class Hand {
 			}
 		}
 
-		String res = "";
 		if (same1 == 1) {
 			res = "high card";
 			value[0] = 1;
@@ -171,7 +167,6 @@ public class Hand {
 			res = "royal flush";
 			value[0] = 10;
 		}
-		System.out.println(hand + " " + res);
 	}
 
 	int compareTo(Hand second) {
@@ -183,6 +178,10 @@ public class Hand {
 			}
 		}
 		return 0;
+	}
+	
+	String getRes(){
+		return res;
 	}
 
 }

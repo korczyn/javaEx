@@ -1,4 +1,4 @@
-package com.capgemini.taxi.secondApproach;
+package taxi.secondApproach.interactive;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +12,9 @@ public class TaxiModule {
 	private static Scanner sc;
 	private static int maxTaxis = 100;
 	private static int maxProximity = 500;
+	Taxi[] taxis;
+	int custX;
+	int custY;
 
 	public static Taxi[] sortTaxisByDistance(Taxi[] taxis) {
 		Arrays.sort(taxis, new Comparator<Taxi>() {
@@ -38,43 +41,56 @@ public class TaxiModule {
 		return closeTaxis.subList(0, max);
 	}
 
-	public static Taxi getTaxiByNymber(Taxi[] taxis, int requiredNumber) {
+	public Taxi getTaxiByNymber(int requiredNumber) {
 		for (Taxi taxi : taxis) {
 			if (taxi.getNumber() == requiredNumber) {
-				System.out.println("Taxi number " + taxi.getNumber() + " is located at (" + taxi.getGpsX() + ","
-						+ taxi.getGpsY() + ") and it is " + taxi.getDistance() + "m from you");
 				return taxi;
 			}
 		}
 		return null;
 	}
-
-	public static void main(String[] args) {
-
+	
+	public void createCustomer(){
 		Random r = new Random();
-		int custX = r.nextInt(1000);
-		int custY = r.nextInt(1000);
-		Taxi[] taxis = new Taxi[10000];
+		custX = r.nextInt(1000);
+		custY = r.nextInt(1000);
+	}
 
+	public void createTaxis(int numberOfTaxis){
+		taxis = new Taxi[numberOfTaxis];
 		for (int i = 0; i < taxis.length; i++) {
 			taxis[i] = new Taxi(i, custX, custY);
 			taxis[i].start();
 		}
 		System.out.println("All taxis dispatched");
-
-		sc = new Scanner(System.in);
-		while (true) {
-			String input = sc.nextLine();
-			if (input.equals("g")) {
-				sortTaxisByDistance(taxis);
-				List<Taxi> closeTaxis = returnMaxAvailableTaxisInGivenProximity(taxis, maxTaxis, maxProximity);
-				for (int i = 0; i < closeTaxis.size(); i++) {
-					System.out.println(closeTaxis.get(i).getNumber() + "  " + closeTaxis.get(i).isAvailable() + "  "
-							+ closeTaxis.get(i).getDistance());
-				}
-				System.out.println("Available taxis " + closeTaxis.size());
-			}
-		}
 	}
+	
+	
+	public void setMaxReturnedTaxis(int maxDesiredTaxis){
+		maxTaxis = maxDesiredTaxis;
+	}
+	
+	public void setMaxProximity(int proximity){
+		maxProximity = proximity;
+	}
+	
+	public int getMaxReturnedTaxis(){
+		return maxTaxis;
+	}
+	
+	public int getMaxProximity(){
+		return maxProximity;
+	}
+
+	
+	public void getTaxis(){
+		sortTaxisByDistance(taxis);
+		List<Taxi> closeTaxis = returnMaxAvailableTaxisInGivenProximity(taxis, maxTaxis, maxProximity);
+		for (int i = 0; i < closeTaxis.size(); i++) {
+			System.out.println(taxis[i].getNumber() + "  " + taxis[i].getDistance() + "m");
+		}
+		System.out.println("Available taxis " + closeTaxis.size());
+	}
+	
 
 }

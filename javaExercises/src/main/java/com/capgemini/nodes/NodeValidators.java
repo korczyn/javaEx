@@ -1,6 +1,9 @@
 package com.capgemini.nodes;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -46,40 +49,18 @@ public class NodeValidators {
 		return true;
 	}
 
-	public static boolean haveCycles(int startNode, List<Node> nodes) {
-		String startingId = nodes.get(startNode).getId();
-		String n = nodes.get(startNode).getPredecessorId();
-		while (true) {
-			if (!n.equals("null")) {
-				Node nod = findNodeById(n, nodes);
-
-				try {
-					if (nod.getId().equals(startingId)) {
-						throw new NodeException("There is a cycle in graph");
-					}
-				} catch (NodeException e) {
-					e.printStackTrace();
-					return true;
-				}
-
-				if (nod.getPredecessorId().equals("null")) {
+	public static boolean haveCycles(List<Node> nodes) {
+		try {
+			for (Node node : nodes) {
+				if (node.getPredecessorId().equals("null")) {
 					return false;
 				}
-				n = nod.getPredecessorId();
-			} else {
-				return false;
 			}
-
+			throw new NodeException("There is a cycle in graph");
+		} catch (NodeException e) {
+			e.printStackTrace();
+			return true;
 		}
-	}
-
-	private static Node findNodeById(String id, List<Node> nodes) {
-		for (int i = 0; i < nodes.size(); i++) {
-			if (nodes.get(i).getId().equals(id)) {
-				return nodes.get(i);
-			}
-		}
-		return null;
 	}
 
 	private static int cointainsPair(Pair a) {
@@ -107,29 +88,29 @@ public class NodeValidators {
 	}
 
 	public static boolean hasTwoSubsequentAndItsOk(List<Node> list) {
-		try{
-		pairs = new ArrayList<Pair>();
-		for (int i = 0; i < list.size(); i++) {
-			Pair p = new Pair(list.get(i).getPredecessorId(), 1, list.get(i).getId());
-			addPairToList(p);
-		}
+		try {
+			pairs = new ArrayList<Pair>();
+			for (int i = 0; i < list.size(); i++) {
+				Pair p = new Pair(list.get(i).getPredecessorId(), 1, list.get(i).getId());
+				addPairToList(p);
+			}
 
-		for (int i = 0; i < pairs.size(); i++) {
-			if (pairs.get(i).getSucc() > 2) {
-				throw new NodeException("Node has " + pairs.get(i).getSucc() + " succesors");
-			} else if (pairs.get(i).getSucc() == 2) {
-				String[] tmp = pairs.get(i).getPreds().split(" ");
-				for (int j = 0; j < pairs.size(); j++) {
-					for (int z = 0; z < tmp.length; z++) {
-						if (pairs.get(j).getId().equals(tmp[z])) {
-							throw new NodeException("Node has 2 succesors and its not penultimate");
+			for (int i = 0; i < pairs.size(); i++) {
+				if (pairs.get(i).getSucc() > 2) {
+					throw new NodeException("Node has " + pairs.get(i).getSucc() + " succesors");
+				} else if (pairs.get(i).getSucc() == 2) {
+					String[] tmp = pairs.get(i).getPreds().split(" ");
+					for (int j = 0; j < pairs.size(); j++) {
+						for (int z = 0; z < tmp.length; z++) {
+							if (pairs.get(j).getId().equals(tmp[z])) {
+								throw new NodeException("Node has 2 succesors and it's not penultimate");
+							}
 						}
 					}
-				}
 
+				}
 			}
-		}
-		} catch(NodeException e){
+		} catch (NodeException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -142,15 +123,22 @@ public class NodeValidators {
 		nodes.add(new Node("0000", "ss", "null"));
 		nodes.add(new Node("1111", "ss", "0000"));
 		nodes.add(new Node("2222", "ss", "1111"));
-		nodes.add(new Node("3333", "ss", "2222"));
-		nodes.add(new Node("4444", "ss", "2222"));
+		nodes.add(new Node("3333", "ss", "1111"));
+		nodes.add(new Node("4444", "ss", "1111"));
+
+		Collections.sort(nodes, new Comparator<Node>() {
+			public int compare(Node n1, Node n2) {
+				return n1.getPredecessorId().compareTo(n2.getPredecessorId());
+			}
+		});
+		
 
 		for (int i = 0; i < nodes.size(); i++) {
 			Node n = nodes.get(i);
 			isIdFourCharsLong(n);
 			isDescriptionAtMost128CharsLong(n);
-			haveCycles(i, nodes);
 		}
+		haveCycles(nodes);
 		hasTwoSubsequentAndItsOk(nodes);
 
 	}
