@@ -30,7 +30,6 @@ public class TaxiTest {
 	
 	@Test
 	public void shouldreturnTrueIfGivenOrLowerNumberOfTaxisReturned_100(){
-		//given
 		Random r = new Random();
 		int custX = r.nextInt(1000);
 		int custY = r.nextInt(1000);
@@ -43,7 +42,6 @@ public class TaxiTest {
 		TaxiModule.sortTaxisByDistance(taxis);
 		List<Taxi> closeTaxis = TaxiModule.returnMaxAvailableTaxisInGivenProximity(taxis, 100, 500);
 		
-		//then
 		assertFalse(closeTaxis.size() > 100);
 	
 	}
@@ -86,7 +84,6 @@ public class TaxiTest {
 		for (int i = 0; i < closeTaxis.size(); i++) {
 			System.out.println(closeTaxis.get(i).isAvailable());
 		}
-		//assertTrue(closeTaxis.get(i).isAvailable());
 		
 	}
 	@Test

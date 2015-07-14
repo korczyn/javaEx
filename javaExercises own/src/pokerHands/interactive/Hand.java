@@ -6,35 +6,6 @@ public class Hand {
 	public Card[] cards;
 	int[] value;
 
-	private static Card makeCard(String c) {
-		char suit = c.charAt(1);
-		char tmp_rank = c.charAt(0);
-		int rank = 0;
-
-		if (tmp_rank == 'T') {
-			rank = 10;
-		} else if (tmp_rank == 'J') {
-			rank = 11;
-		} else if (tmp_rank == 'Q') {
-			rank = 12;
-		} else if (tmp_rank == 'K') {
-			rank = 13;
-		} else if (tmp_rank == 'A') {
-			rank = 1;
-		} else {
-			rank = Integer.parseInt(String.valueOf(tmp_rank));
-		}
-		Card card = new Card(suit, rank);
-
-		return card;
-	}
-
-	private static void printArray(int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			System.err.println(arr[i]);
-		}
-	}
-
 	Hand(Card[] cards) {
 		
 
