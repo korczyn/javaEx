@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class PokerGame {
 
 	static Deck deck;
-	static BigInteger monies = new BigInteger("57167010188990208");
+	static BigInteger monies = new BigInteger("1351786562627354052702");
 	static Card[] c1;
 	static Card[] c2;
 	static Hand h1;
@@ -41,11 +41,22 @@ public class PokerGame {
 		System.out.println("\n" + h2.getRes());
 	}
 
+	public String changeCard(Card[] cards, String card) {
+		for (int i = 0; i < cards.length; i++) {
+			String type = String.valueOf(cards[i].getRank()) + String.valueOf(cards[i].getSuit());
+			if (card.equals(type)) {
+				cards[i] = deck.drawACard();
+				return String.valueOf(cards[i].getRank()) + String.valueOf(cards[i].getSuit());
+			}
+		}
+		return null;
+	}
+
 	public static void resolveBet() {
 		print2ndHand();
 		int winner = h1.compareTo(h2);
 		if (winner == 1) {
-			System.out.println("You've won " + Numbers.convertToCurrency(bet));
+			System.out.println("You've won " + Numbers.toScientificNotation(bet));
 			monies = monies.add(bet);
 			if (monies.compareTo(BigInteger.valueOf(1000000000)) == 1 && germoney) {
 				System.out.println(">=================GERMONEY================<");
@@ -53,7 +64,7 @@ public class PokerGame {
 			}
 		}
 		if (winner == -1) {
-			System.out.println("You've lost " + Numbers.convertToCurrency(bet));
+			System.out.println("You've lost " + Numbers.toScientificNotation(bet));
 			monies = monies.subtract(bet);
 			if (monies.compareTo(BigInteger.valueOf(1000000000)) == -1) {
 				System.out.println(">=============Goodbye Greece==============<");
@@ -66,21 +77,22 @@ public class PokerGame {
 		sc = new Scanner(System.in);
 		String input;
 		while (true) {
-			try{
-				System.out.println("Your monies: " + Numbers.convertToCurrency(monies) + " (" + Numbers.nameANumber(monies) + ")");
+			try {
+				System.out.println("Your monies: " + Numbers.convertToCurrency(monies) + " ("
+						+ Numbers.toScientificNotation(monies) + ")");
 				setUpHands();
 				System.out.print("Bet ");
 				input = sc.nextLine();
-				if(input.equals("all")){
+				if (input.equals("a")) {
 					bet = monies;
-				} else if(input.equals("half")){
+				} else if (input.equals("h")) {
 					bet = monies.divide(BigInteger.valueOf(2));
 				} else {
 					bet = monies.min(new BigInteger(input));
 				}
 				resolveBet();
 				System.out.println("===========================================");
-			} catch (NumberFormatException e){
+			} catch (NumberFormatException e) {
 				System.err.println(">==========Wrong input, next game=========<");
 			}
 		}
