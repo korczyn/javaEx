@@ -29,60 +29,49 @@ import java.util.Random;
  * represented by A[3].
  */
 public class Coins {
+
+	/**
+	 * Given a list of 0's and 1's count maximum adjacency we can achieve by
+	 * flipping one coin
+	 * 
+	 * @param coins
+	 * @return maximum adjacency found
+	 */
 	public static int solution(List<Integer> coins) {
-		
-		for(int i = 0; i < coins.size(); i++){
+		for (int i = 0; i < coins.size(); i++) {
 			int tmp = coins.get(i);
-			if(tmp != 1 && tmp != 0){
+			if (tmp != 1 && tmp != 0) {
 				System.err.println("List can conatin only 1's or 0's");
 				return -1;
 			}
 		}
-		
-		int[] tmp = toIntArray(coins);
-		int max = countAdj(tmp);
+
+		int max = countAdj(coins);
 
 		for (int i = 0; i < coins.size(); i++) {
-			tmp[i] = (tmp[i] + 1) % 2;
-			int current = countAdj(tmp);
+			coins.set(i, (coins.get(i) + 1) % 2);
+			int current = countAdj(coins);
 			if (current > max) {
 				max = current;
 			}
-			tmp[i] = (tmp[i] + 1) % 2;
+			coins.set(i, (coins.get(i) + 1) % 2);
 		}
 		return max;
 	}
 
-	private static int countAdj(int[] arr) {
+	/**
+	 * Counts adjacency of given list
+	 * 
+	 * @param list
+	 * @return calculated adjacency
+	 */
+	private static int countAdj(List<Integer> list) {
 		int pairs = 0;
-		for (int i = 0; i < arr.length - 1; i++) {
-			if (arr[i] == arr[i + 1]) {
+		for (int i = 0; i < list.size() - 1; i++) {
+			if (list.get(i) == list.get(i + 1)) {
 				pairs++;
 			}
 		}
 		return pairs;
 	}
-
-	private static int[] toIntArray(List<Integer> list) {
-		int[] tmp = new int[list.size()];
-		for (int i = 0; i < list.size(); i++) {
-			tmp[i] = list.get(i);
-		}
-		return tmp;
-	}
-
-	public static void main(String[] args) {
-		List<Integer> coins = new ArrayList<Integer>();
-		Random r = new Random();
-		for (int i = 0; i < 6; i++) {
-			coins.add(r.nextInt(500) % 2);
-		}
-
-		for (int i = 0; i < coins.size(); i++) {
-			System.out.print(coins.get(i) + " ");
-		}
-
-		System.out.println("\nMaximum possible adjacency: " + solution(coins));
-	}
-
 }

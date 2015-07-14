@@ -6,6 +6,14 @@ package com.capgemini.fibonacci;
  * 2584 4181
  */
 public class Fibonacci {
+
+	/**
+	 * Counts value of fibb(n) by iteration
+	 * 
+	 * @param n
+	 *            - which Fibonacci calculate
+	 * @return n-th Fobonacci number
+	 */
 	public static long fib(int n) {
 		if (n < 0) {
 			System.out.println("Enter positive number");
@@ -27,7 +35,7 @@ public class Fibonacci {
 
 		for (int i = 2; i < n; i++) {
 			tmp[2] = tmp[0] + tmp[1];
-			if(Math.abs(tmp[2]) != tmp[0] + tmp[1]){
+			if (Math.abs(tmp[2]) != tmp[0] + tmp[1]) {
 				System.out.println("Pick smaller number");
 				return -1;
 			}
@@ -37,19 +45,17 @@ public class Fibonacci {
 		return tmp[1];
 	}
 
+	/**
+	 * Shifts 3-element array to left
+	 * 
+	 * @param arr
+	 *            - array to shift
+	 * @return shifted array
+	 */
 	private static long[] shiftArray(long[] arr) {
 		arr[0] = arr[1];
 		arr[1] = arr[2];
 		arr[2] = 0;
 		return arr;
 	}
-	
-
-	public static void main(String[] args) {
-		for (int i = 0; i < 100; i++) {
-			System.out.println(fib(i));
-		}
-
-	}
-
 }

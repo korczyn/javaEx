@@ -21,6 +21,14 @@ public class NodeValidators {
 
 	public static List<Pair> pairs;
 
+	/**
+	 * Check if node ID is 4 chars long
+	 * 
+	 * @param node
+	 *            - node to check
+	 * @return true if ID is 4 chars long
+	 * @return false if not
+	 */
 	public static boolean isIdFourCharsLong(Node node) {
 
 		try {
@@ -33,9 +41,16 @@ public class NodeValidators {
 		}
 
 		return true;
-
 	}
 
+	/**
+	 * Checks if node description is shorter than 128 chars
+	 * 
+	 * @param node
+	 *            - node to check
+	 * @return true if node decs. is shorter than 128 chars
+	 * @return flase if not
+	 */
 	public static boolean isDescriptionAtMost128CharsLong(Node node) {
 		try {
 			if (node.getDescription().length() > 128) {
@@ -45,10 +60,18 @@ public class NodeValidators {
 			e.printStackTrace();
 			return false;
 		}
-
 		return true;
 	}
 
+	/**
+	 * Checks if there is a cycle in graph. In that implementation cycle in
+	 * graph exists if every node has predecessors. If at least one does not
+	 * have one that means that there is a cycle
+	 * 
+	 * @param nodes - list of nodes
+	 * @return true if there is a cycle
+	 * @return false if not
+	 */
 	public static boolean haveCycles(List<Node> nodes) {
 		try {
 			for (Node node : nodes) {
@@ -63,15 +86,25 @@ public class NodeValidators {
 		}
 	}
 
-	private static int cointainsPair(Pair a) {
+	/**
+	 * Check if list of pairs contains given pair. If id's match then list contains given pair
+	 * @param pair - pair to check
+	 * @return i - index of pair if pair is on a list
+	 * @return -1 - if pair is not on a list
+	 */
+	private static int cointainsPair(Pair pair) {
 		for (int i = 0; i < pairs.size(); i++) {
-			if (a.getId().equals(pairs.get(i).getId())) {
+			if (pair.getId().equals(pairs.get(i).getId())) {
 				return i;
 			}
 		}
 		return -1;
 	}
 
+	/**
+	 * Adding pair to list. If pair exists then its number of succesors is incremented and new succesor is added
+	 * @param pair - pair to add to list
+	 */
 	private static void addPairToList(Pair pair) {
 		if (pairs.size() == 0) {
 			pairs.add(pair);
@@ -87,6 +120,15 @@ public class NodeValidators {
 		}
 	}
 
+	/**
+	 * Checks how many succesors each node has.
+	 * Only penultimate node can has two subsequent. That means max 2 nodes pointing at it, and not a single node pointing at them.
+	 * @param list - list of nodes to check
+	 * @return true if every node has one subsequent
+	 * @return true if penultimate node has two subsequent
+	 * @return false if node have more than 2 subsequent
+	 * @return false if node have two subsequent and it is not penultimate
+	 */
 	public static boolean hasTwoSubsequentAndItsOk(List<Node> list) {
 		try {
 			pairs = new ArrayList<Pair>();
@@ -116,35 +158,15 @@ public class NodeValidators {
 		}
 		return true;
 	}
-
-	public static void main(String[] args) {
-		List<Node> nodes = new ArrayList<Node>();
-
-		nodes.add(new Node("0000", "ss", "null"));
-		nodes.add(new Node("1111", "ss", "0000"));
-		nodes.add(new Node("2222", "ss", "1111"));
-		nodes.add(new Node("3333", "ss", "1111"));
-		nodes.add(new Node("4444", "ss", "1111"));
-
-		Collections.sort(nodes, new Comparator<Node>() {
-			public int compare(Node n1, Node n2) {
-				return n1.getPredecessorId().compareTo(n2.getPredecessorId());
-			}
-		});
-		
-
-		for (int i = 0; i < nodes.size(); i++) {
-			Node n = nodes.get(i);
-			isIdFourCharsLong(n);
-			isDescriptionAtMost128CharsLong(n);
-		}
-		haveCycles(nodes);
-		hasTwoSubsequentAndItsOk(nodes);
-
-	}
-
 }
 
+/**
+ * 
+ * @author MKORCZYN
+ * Auxiliary class to help to ensure that only penultimate node can have 2 subsequent nodes
+ * Each pair stores node id, number of its succesors and their id's
+ *
+ */
 class Pair {
 	private String id;
 	private int succ;

@@ -7,11 +7,20 @@ package com.capgemini.placeToSplit;
  * canBalance({2, 1, 1, 2, 1}) → false canBalance({10, 10}) → true }}}
  */
 public final class PlaceToSplit {
-	private PlaceToSplit() {
-	}
 
+	/**
+	 * Calculates if it is possible to split an array to two arrays with the
+	 * same value of sum of elements Firstly it calculates the whole sum and
+	 * subtract elements in a loop. If temporary sum is equal to half of whole
+	 * sum, then array can be split
+	 * 
+	 * @param nums
+	 *            - array to check
+	 * @return true if array can be split
+	 * @return false if not
+	 */
 	public static boolean canBalance(int[] nums) {
-		
+
 		int sum = 0;
 		for (int i = 0; i < nums.length; i++) {
 			sum += nums[i];
@@ -31,15 +40,4 @@ public final class PlaceToSplit {
 
 		return false;
 	}
-
-	public static void main(String[] args) {
-		int[] nums = {  };
-		if (canBalance(nums)) {
-			System.out.println("OK");
-		} else {
-			System.out.println("Not OK");
-		}
-
-	}
-
 }

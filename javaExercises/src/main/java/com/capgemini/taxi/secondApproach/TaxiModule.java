@@ -13,6 +13,13 @@ public class TaxiModule {
 	private static int maxTaxis = 100;
 	private static int maxProximity = 500;
 
+	/**
+	 * Given array of Taxi object sorts it by distance to customer
+	 * 
+	 * @param taxis
+	 *            - array of taxis
+	 * @return sorted array of taxis
+	 */
 	public static Taxi[] sortTaxisByDistance(Taxi[] taxis) {
 		Arrays.sort(taxis, new Comparator<Taxi>() {
 			public int compare(Taxi t1, Taxi t2) {
@@ -26,6 +33,19 @@ public class TaxiModule {
 		return taxis;
 	}
 
+	/**
+	 * Looks through the array of taxis and returns given number of taxis which
+	 * are available and in given proximity
+	 * 
+	 * @param taxis
+	 *            - array of taxis
+	 * @param maxTaxisToReturn
+	 *            - how much taxis customer wants to be returned
+	 * @param proximity
+	 *            - maximum distance between taxi and customer
+	 * @return ArrayList of given size containing available taxis in given
+	 *         proximity
+	 */
 	public static List<Taxi> returnMaxAvailableTaxisInGivenProximity(Taxi[] taxis, int maxTaxisToReturn,
 			int proximity) {
 		List<Taxi> closeTaxis = new ArrayList<Taxi>();
@@ -38,7 +58,17 @@ public class TaxiModule {
 		return closeTaxis.subList(0, max);
 	}
 
-	public static Taxi getTaxiByNymber(Taxi[] taxis, int requiredNumber) {
+	/**
+	 * Prints detailed information about taxi of given number and returns object
+	 * of that taxi
+	 * 
+	 * @param taxis
+	 *            - array of taxis
+	 * @param requiredNumber
+	 *            - number of taxi
+	 * @return taxi of given number
+	 */
+	public static Taxi getTaxiByNumber(Taxi[] taxis, int requiredNumber) {
 		for (Taxi taxi : taxis) {
 			if (taxi.getNumber() == requiredNumber) {
 				System.out.println("Taxi number " + taxi.getNumber() + " is located at (" + taxi.getGpsX() + ","

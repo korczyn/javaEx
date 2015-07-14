@@ -7,6 +7,16 @@ package com.capgemini.pascalrectangle;
  */
 public class PascalRectangle {
 
+	/**
+	 * Calculates value at given column and row in Pascal Triangle
+	 * 
+	 * @param c
+	 *            - column index
+	 * @param r
+	 *            - row index
+	 * @return value in (column, row) in Pascal Triangle
+	 * @return -1 if input data is incorrect
+	 */
 	public static long pascal(int c, int r) {
 		if (c < 0 || r < 0) {
 			System.out.println("Column or row number musn't be negative");
@@ -22,9 +32,5 @@ public class PascalRectangle {
 		} else {
 			return pascal(c - 1, r - 1) + pascal(c - 1, r);
 		}
-	}
-
-	public static void main(String[] args) {
-		System.out.println(pascal(5, 3));
 	}
 }
