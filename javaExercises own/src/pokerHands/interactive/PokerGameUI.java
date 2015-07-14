@@ -107,7 +107,7 @@ public class PokerGameUI extends JFrame {
 					p1Cards[i].setLabel(String.valueOf(pg.c1[i].getRank()) + String.valueOf(pg.c1[i].getSuit()));
 				}
 				for (int j = 0; j < p1Cards.length; j++) {
-					ImageIcon ii = new ImageIcon("AC.png");
+					ImageIcon ii = new ImageIcon("res//cardFace.jpg");
 					p2Cards[j].setText("");
 					p2Cards[j].setIcon(ii);
 					p1Cards[j].setEnabled(true);
