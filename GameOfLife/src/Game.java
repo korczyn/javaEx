@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Game {
 
-	public static int size = 50;
+	public static int size = 51;
 	public static List<Cell> board;
 
 	public static List<Cell> createCells() {
@@ -18,17 +17,14 @@ public class Game {
 		return list;
 	}
 
-	public void init() {
+	public static void init() {
 		board = createCells();
 		for (Cell c : board) {
 			c.setNeighboursList(Neighbourhood.setNeighbours2D(c));
-			List<Cell> t = c.getNeighboursList();
-			for (Cell cell : t) {
-			}
 		}
 	}
 
-	void changeState(Cell c) {
+	static void changeState(Cell c) {
 		boolean isAlive = c.isAlive();
 		int aliveNeighbours = c.getAliveNeighbours();
 
@@ -43,7 +39,7 @@ public class Game {
 		}
 	}
 
-	public void calculateNextGeneration() {
+	public static void calculateNextGeneration() {
 
 		for (Cell cell : board) {
 			cell.countAliveNeighbours();

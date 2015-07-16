@@ -36,8 +36,8 @@ public class PrintGame {
 		// c.ressurect();
 		// c = Neighbourhood.getCellByCoords("1 0");
 		// c.ressurect();
-		// c = Neighbourhood.getCellByCoords("1 1");
-		// c.ressurect();
+		 Cell c = Neighbourhood.getCellByCoords("1 1");
+		 c.ressurect();
 		// c = Neighbourhood.getCellByCoords("1 2");
 		// c.ressurect();
 		// c = Neighbourhood.getCellByCoords("2 0");
@@ -47,11 +47,11 @@ public class PrintGame {
 		// c = Neighbourhood.getCellByCoords("2 2");
 		// c.ressurect();
 
-		Random r = new Random();
-		for (int i = 0; i < g.board.size() / 2; i++) {
-			int ran = r.nextInt(g.board.size());
-			g.board.get(ran).ressurect();
-		}
+//		Random r = new Random();
+//		for (int i = 0; i < g.board.size() / 2; i++) {
+//			int ran = r.nextInt(g.board.size());
+//			g.board.get(ran).ressurect();
+//		}
 
 		print2D(g.board);
 		System.out.println("==========================================================");
