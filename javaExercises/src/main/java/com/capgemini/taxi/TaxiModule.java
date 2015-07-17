@@ -1,71 +1,137 @@
 package com.capgemini.taxi;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TaxiModule {
 
-	public static double calculateDistance(int taxiX, int taxiY, int custX, int custY) {
-		double xSqr = Math.pow(taxiX - custX, 2);
-		double ySqr = Math.pow(taxiY - custY, 2);
-		double distance = Math.sqrt(xSqr + ySqr);
-		return Math.round(distance);
+	private static Scanner sc;
+	private static int maxTaxis = 100;
+	private static int maxProximity = 500;
+	Taxi[] taxis;
+	int custX;
+	int custY;
+
+	/**
+	 * Sorts the array of taxis by distance using custom comparator
+	 * 
+	 * @param taxis
+	 *            - array of Taxi objects
+	 * @return array of taxi objects sorted by distance
+	 */
+	public static Taxi[] sortTaxisByDistance(Taxi[] taxis) {
+		Arrays.sort(taxis, new Comparator<Taxi>() {
+			public int compare(Taxi t1, Taxi t2) {
+				if (t1.getDistance() > t2.getDistance())
+					return 1;
+				if (t1.getDistance() < t2.getDistance())
+					return -1;
+				return 0;
+			}
+		});
+		return taxis;
 	}
 
-	public static List<String> returnTaxisCloserThanGivenDistance(Taxi[] taxis, int custX, int custY,
-			int requiredDistance) {
-		List<String> availableTaxisCloserThenGivenDistance = new ArrayList<String>();
+	/**
+	 * Returns a list of size of Taxi objects that are available for customer
+	 * and in given proximity. List have size of maxTaxisToReturn or lower if
+	 * there is fewer taxis in given proximity than maxTaxisToReturn value
+	 * 
+	 * @param taxis
+	 *            - array of taxi objects
+	 * @param maxTaxisToReturn
+	 *            - maximum number of taxis to return
+	 * @param proximity
+	 *            - maximum distance from customer to taxi
+	 * @return
+	 */
+	public static List<Taxi> returnMaxAvailableTaxisInGivenProximity(Taxi[] taxis, int maxTaxisToReturn,
+			int proximity) {
+		List<Taxi> closeTaxis = new ArrayList<Taxi>();
 		for (int i = 0; i < taxis.length; i++) {
-			double distance = calculateDistance(taxis[i].getGpsX(), taxis[i].getGpsY(), custX, custY);
-			boolean available = taxis[i].getAvailability();
-			if (distance < 250 && available) {
-				availableTaxisCloserThenGivenDistance.add("distance: " + distance * 4 + "      No: " + i);
+			if (taxis[i].getDistance() < proximity && taxis[i].isAvailable()) {
+				closeTaxis.add(taxis[i]);
 			}
 		}
-		return availableTaxisCloserThenGivenDistance;
+		int max = Math.min(maxTaxisToReturn, closeTaxis.size());
+		return closeTaxis.subList(0, max);
 	}
 
-	public static List<String> findTaxis(Taxi[] taxis, int custX, int custY, int distance, int numberOfTaxisToReturn) {
-		
-				System.out.println("customer's position x:" + custX + " y:" + custY);
-				List<String> closeAvailableTaxis = returnTaxisCloserThanGivenDistance(taxis, custX, custY, distance);
-				java.util.Collections.sort(closeAvailableTaxis);
-				int max = Math.min(numberOfTaxisToReturn, closeAvailableTaxis.size());
-				for (int i = 0; i < max; i++) {
-					System.out.println(closeAvailableTaxis.get(i));
-				}
-
-				// TimeUnit.MILLISECONDS.sleep(100);
-			
-		return closeAvailableTaxis.subList(0, max);
+	/**
+	 * Returns Taxi object with given number
+	 * 
+	 * @param requiredNumber
+	 *            - number of Taxi object to return
+	 * @return Taxi object with number requiredNumber
+	 */
+	public Taxi getTaxiByNymber(int requiredNumber) {
+		for (Taxi taxi : taxis) {
+			if (taxi.getNumber() == requiredNumber) {
+				return taxi;
+			}
+		}
+		return null;
 	}
 
-	public static void main(String[] args) throws InterruptedException, IOException {
-		int taxisQuan = 1000;
-		int maxTaxisReturned = Math.round(taxisQuan / 20);
+	/**
+	 * Creates customer with random coordinates
+	 */
+	public void createCustomer() {
+		Random r = new Random();
+		custX = r.nextInt(1000);
+		custY = r.nextInt(1000);
+	}
 
-		Taxi[] taxis = new Taxi[taxisQuan];
+	/**
+	 * Creates array of Taxi objects of given size
+	 * 
+	 * @param numberOfTaxis
+	 *            - array of Taxi objects
+	 */
+	public void createTaxis(int numberOfTaxis) {
+		taxis = new Taxi[numberOfTaxis];
 		for (int i = 0; i < taxis.length; i++) {
-			taxis[i] = new Taxi(i);
+			taxis[i] = new Taxi(i, custX, custY);
 			taxis[i].start();
 		}
-		Random r = new Random();
-		int custX = r.nextInt(1000);
-		int custY = r.nextInt(1000);
+		System.out.println("All taxis dispatched");
+	}
 
-		Scanner sc = new Scanner(System.in);
-		System.out.println("All taxis dispatched. Type 'g' to get taxis near you");
-		while (true) {
-			String input = sc.nextLine();
-			if (input.equals("g")) {
-				List<String> closeAvailableTaxis = findTaxis(taxis, custX, custY, 250, maxTaxisReturned);
-				System.out.println("Available taxis: " + closeAvailableTaxis.size());
-			}
+	public void setMaxReturnedTaxis(int maxDesiredTaxis) {
+		maxTaxis = maxDesiredTaxis;
+	}
+
+	public void setMaxProximity(int proximity) {
+		maxProximity = proximity;
+	}
+
+	public int getMaxReturnedTaxis() {
+		return maxTaxis;
+	}
+
+	public int getMaxProximity() {
+		return maxProximity;
+	}
+
+	/**
+	 * Returns sorted by distance list of Taxi objects that fulfill user
+	 * requirements such as maximum number of Taxi objects to return, Taxi
+	 * availability or maximum distance to customer.
+	 * 
+	 * @return list of Taxi objects fulfilling user requirements
+	 */
+	public List<Taxi> getTaxis() {
+		sortTaxisByDistance(taxis);
+		List<Taxi> closeTaxis = returnMaxAvailableTaxisInGivenProximity(taxis, maxTaxis, maxProximity);
+		for (int i = 0; i < closeTaxis.size(); i++) {
+			System.out.println(closeTaxis.get(i).getNumber() + "  " + closeTaxis.get(i).getDistance() + "m");
 		}
-
+		System.out.println("Available taxis " + closeTaxis.size());
+		return closeTaxis;
 	}
 
 }

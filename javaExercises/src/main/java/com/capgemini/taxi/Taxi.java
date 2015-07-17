@@ -9,33 +9,22 @@ public class Taxi extends Thread {
 	private int gpsX;
 	private int gpsY;
 	private boolean available = true;
+	private int custX;
+	private int custY;
+	private double distanceToCustomer;
 
-	Taxi(int number) {
+	Taxi(int number, int custX, int custY) {
 		this.number = number;
+		this.custX = custX;
+		this.custY = custY;
 	}
 
-	public void run() {
-		Random r = new Random();
-		gpsX = r.nextInt(1000);
-		gpsY = r.nextInt(1000);
+	public int getNumber() {
+		return number;
+	}
 
-		while (true) {
-			gpsX = gpsX + (10 - r.nextInt(21));
-			gpsY = gpsY + (10 - r.nextInt(21));
-			int tmp = r.nextInt(500);
-			if (tmp > 325) {
-				available = false;
-			} else {
-				available = true;
-			}
-
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
+	public boolean isAvailable() {
+		return available;
 	}
 
 	public int getGpsX() {
@@ -46,8 +35,52 @@ public class Taxi extends Thread {
 		return gpsY;
 	}
 
-	public boolean getAvailability() {
-		return available;
+	public int getCustX() {
+		return custX;
 	}
 
+	public int getCustY() {
+		return custY;
+	}
+
+	public double getDistance() {
+		return distanceToCustomer*4;
+	}
+
+	private void changeAvailability(Random r) {
+		if (r.nextInt(500) > 350) {
+			available = true;
+		} else {
+			available = false;
+		}
+	}
+
+	private double calculateDistance(int gpsX, int gpsY, int custX, int custY) {
+		double xSqr = Math.pow(gpsX - custX, 2);
+		double ySqr = Math.pow(gpsY - custY, 2);
+		double distance = Math.sqrt(xSqr + ySqr);
+		return Math.round(distance);
+	}
+
+	public void run() {
+		Random r = new Random();
+		gpsX = r.nextInt(1000);
+		gpsY = r.nextInt(1000);
+
+		while (true) {
+			gpsX = Math.abs(gpsX + (10 - r.nextInt(21)));
+			gpsY = Math.abs(gpsY + (10 - r.nextInt(21)));
+
+			distanceToCustomer = calculateDistance(gpsX, gpsY, custX, custY);
+			changeAvailability(r);
+
+			try {
+				TimeUnit.SECONDS.sleep(2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
 }
