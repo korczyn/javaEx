@@ -1,16 +1,17 @@
+package com.capgemini.gol;
 import java.util.List;
 
 public class Cell {
-	private String coords;
+	private List<Integer> coords;
 	private int aliveNeighbours;
 	private boolean isAlive;
 	private List<Cell> neighbours;
 	
-	public Cell(String coords){
+	public Cell(List<Integer> coords){
 		this.coords = coords;
 	}
 	
-	public String getCoords(){
+	public List<Integer> getCoords(){
 		return coords;
 	}
 	
