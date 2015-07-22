@@ -1,4 +1,5 @@
 package com.capgemini.gol;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -31,8 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 public class LifeUI extends JFrame {
 
@@ -55,7 +54,7 @@ public class LifeUI extends JFrame {
 	};
 
 	public Figure figure;
-	
+
 	public LifeUI() {
 		Game.init();
 		initUI();
@@ -66,12 +65,11 @@ public class LifeUI extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(LifeUI.Figure.values().length, 1));
 		Figure[] f = LifeUI.Figure.values();
-		for(int i = 0; i < LifeUI.Figure.values().length; i++){
+		for (int i = 0; i < LifeUI.Figure.values().length; i++) {
 			final int index = i;
 			JLabel label = new JLabel(String.valueOf(Figure.values()[i]));
 			label.addMouseListener(new MouseListener() {
-				
-				
+
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					figure = Figure.values()[index];
@@ -81,41 +79,38 @@ public class LifeUI extends JFrame {
 				@Override
 				public void mouseEntered(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mouseExited(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent arg0) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
 			panel.add(label);
 		}
-		jf.setSize(75, 50*Figure.values().length);
+		jf.setSize(75, 50 * Figure.values().length);
 		revalidate();
 		repaint();
 		jf.add(panel);
 		jf.add(panel);
 		jf.setVisible(true);
-		
-		
+
 	}
-	
-	
-	
+
 	private void updateBoard() {
 		for (int i = 0; i < cells.length; i++) {
 			if (Game.board.get(i).isAlive()) {
@@ -126,7 +121,6 @@ public class LifeUI extends JFrame {
 		}
 	}
 
-	
 	private void chooseFileToLoad() {
 		final JFrame jf = new JFrame();
 
@@ -338,7 +332,8 @@ public class LifeUI extends JFrame {
 
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					System.out.println(Game.board.get(index).getCoords().get(0) + " " + Game.board.get(index).getCoords().get(1));
+					System.out.println(
+							Game.board.get(index).getCoords().get(0) + " " + Game.board.get(index).getCoords().get(1));
 					if (leftMouseDown) {
 						ImageIcon ii = aliveColor;
 						cells[index].setIcon(ii);
@@ -504,11 +499,8 @@ public class LifeUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
-	
-	
 
 	public static void main(String[] args) {
-		
 
 		SwingUtilities.invokeLater(new Runnable() {
 
